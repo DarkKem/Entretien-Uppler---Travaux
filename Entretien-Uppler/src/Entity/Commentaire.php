@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Interface\Post;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
  */
-class Commentaire
+class Commentaire implements Post
 {
     /**
      * @ORM\Id
@@ -31,7 +32,12 @@ class Commentaire
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateModification;
 
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="commentaires")
@@ -68,18 +74,30 @@ class Commentaire
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->date = $date;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
+    public function getDateModification(): ?\DateTimeInterface
+    {
+        return $this->dateModification;
+    }
+
+    public function setDateModification(\DateTimeInterface $dateModification): self
+    {
+        $this->dateModification = $dateModification;
+
+        return $this;
+    }
+    
     public function getArticle(): ?Article
     {
         return $this->article;
