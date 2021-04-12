@@ -20,13 +20,15 @@ class CommentaireUnitTest extends TestCase
 
         $commentaire->setAuteur($user)
                     ->setContenu("contenue")
-                    ->setDate($datetime)
+                    ->setCreatedAt($datetime)
+                    ->setDateModification($datetime)
                     ->setArticle($article);
 
 
         $this->assertTrue($commentaire->getAuteur() === $user);
         $this->assertTrue($commentaire->getContenu() === 'contenue');
-        $this->assertTrue($commentaire->getDate() === $datetime);
+        $this->assertTrue($commentaire->getCreatedAt() === $datetime);
+        $this->assertTrue($commentaire->getDateModification() === $datetime);
         $this->assertTrue($commentaire->getArticle() === $article);
     }
 
@@ -39,13 +41,14 @@ class CommentaireUnitTest extends TestCase
 
         $commentaire->setAuteur($user)
                     ->setContenu("contenue")
-                    ->setDate($datetime)
+                    ->setCreatedAt($datetime)
                     ->setArticle($article);
 
 
         $this->assertFalse($commentaire->getAuteur() === new User());
         $this->assertFalse($commentaire->getContenu() === 'false');
-        $this->assertFalse($commentaire->getDate() === new DateTime());
+        $this->assertFalse($commentaire->getCreatedAt() === new DateTime());
+        $this->assertFalse($commentaire->getDateModification() === new DateTime());
         $this->assertFalse($commentaire->getArticle() === new Commentaire());
     }
 
@@ -55,7 +58,8 @@ class CommentaireUnitTest extends TestCase
 
         $this->assertEmpty($commentaire->getAuteur());
         $this->assertEmpty($commentaire->getContenu());
-        $this->assertEmpty($commentaire->getDate());
+        $this->assertEmpty($commentaire->getCreatedAt());
+        $this->assertEmpty($commentaire->getDateModification());
         $this->assertEmpty($commentaire->getArticle());
     }
 }
