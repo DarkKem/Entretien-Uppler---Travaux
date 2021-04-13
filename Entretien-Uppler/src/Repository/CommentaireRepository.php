@@ -22,6 +22,18 @@ class CommentaireRepository extends ServiceEntityRepository
     // /**
     //  * @return Commentaire[] Returns an array of Commentaire objects
     //  */
+    public function lasttree()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.id', 'DESC')
+                    ->setMaxResults(3)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    // /**
+    //  * @return Commentaire[] Returns an array of Commentaire objects
+    //  */
     /*
     public function findByExampleField($value)
     {
