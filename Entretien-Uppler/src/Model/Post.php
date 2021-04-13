@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Interface;
+namespace App\Model;
 
 use App\Entity\User;
 
-interface Post
-{
+interface Post{
+    
     public function getCreatedAt(): ?\DateTimeInterface;
     public function setCreatedAt(\DateTimeInterface $createdAt): self;
     public function getDateModification(): ?\DateTimeInterface;

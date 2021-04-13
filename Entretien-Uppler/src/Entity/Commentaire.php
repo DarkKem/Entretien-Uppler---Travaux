@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Interface\Post;
+use App\Model\Post;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 

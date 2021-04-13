@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Interface\Post;
+use App\Model\Post;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
