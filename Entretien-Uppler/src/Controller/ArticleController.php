@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Commentaire;
 use App\Form\ArticleType;
+use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
 use DateTime;
@@ -19,11 +21,33 @@ class ArticleController extends AbstractController
      * @Route("/article/{id}", name="article")
      */
     public function article(int $id, ArticleRepository $articleRepository, 
-                            CommentaireRepository $commentaireRepository): Response
+                            CommentaireRepository $commentaireRepository,
+                            Request $request): Response
     {
+        $article = $articleRepository->findById($id)[0];
+        $commentaire = new Commentaire();
+        $commentaire->setAuteur($this->getUser())
+                    ->setCreatedAt(new DateTime())
+                    ->setDateModification(new DateTime())
+                    ->setArticle($article);
+
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('article', ["id" => $article->getId()]);
+        }
+
         return $this->render('article/articleDetaille.html.twig', [
-            'article' => $articleRepository->findById($id)[0] ,
+            'article' => $article ,
             'commentaires' => $commentaireRepository->findByArticleId($id),
+            'form' => $form->createView()
         ]);
     }
 
