@@ -17,8 +17,8 @@ class HomeController extends AbstractController
                           CommentaireRepository $commentaireRepository): Response
     {
         return $this->render('home/index.html.twig', [
-            'articles' => $articleRepository->lastFive(),
-            'commentaires' => $commentaireRepository->lastTree(),
+            'articles' => $articleRepository->getArticle(),
+
         ]);
     }
 }

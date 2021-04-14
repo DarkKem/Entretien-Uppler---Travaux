@@ -22,11 +22,10 @@ class ArticleRepository extends ServiceEntityRepository
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
-    public function lastFive()
+    public function getArticle()
     {
         return $this->createQueryBuilder('p')
                     ->orderBy('p.id', 'DESC')
-                    ->setMaxResults(5)
                     ->getQuery()
                     ->getResult();
     }
