@@ -22,6 +22,17 @@ class ArticleRepository extends ServiceEntityRepository
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
+    public function getArticle()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    // /**
+    //  * @return Article[] Returns an array of Article objects
+    //  */
     /*
     public function findByExampleField($value)
     {

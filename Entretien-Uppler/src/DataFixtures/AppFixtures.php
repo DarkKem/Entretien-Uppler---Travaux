@@ -48,7 +48,8 @@ class AppFixtures extends Fixture
                     ->setCreatedAt($faker->dateTime())
                     ->setDateModification(new DateTime('now'))
                     ->setAuteur($user)
-                    ->setDescription($faker->text(350));
+                    ->setDescription($faker->text(350))
+                    ->setImage($faker->imageUrl());
 
             
 
