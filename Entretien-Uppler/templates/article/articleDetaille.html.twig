@@ -31,7 +31,15 @@
         </div>
     </div>
 </div>
-
+{{ form_start(form) }}
+  <div class="card-body shadow-sm">
+    <div class="from-groupe">
+      Commentaire
+      {{form_widget(form.contenu)}}
+    </div>
+    <button class="btn btn-sm btn-outline-success">Valider</button>
+  </div>
+{{ form_end(form) }}
 {% for commentaire in commentaires %}
   <div class="card-body shadow-sm">
             <h5 class="card-title">Par {{commentaire.auteur.prenom}} {{commentaire.auteur.nom}}</h5>
