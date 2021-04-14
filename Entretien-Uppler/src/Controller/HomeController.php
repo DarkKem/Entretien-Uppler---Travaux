@@ -13,12 +13,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ArticleRepository $articleRepository, 
-                          CommentaireRepository $commentaireRepository): Response
+    public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('home/index.html.twig', [
-            'articles' => $articleRepository->getArticle(),
+            'articles' => $articleRepository->findAll(),
 
         ]);
     }
+
 }

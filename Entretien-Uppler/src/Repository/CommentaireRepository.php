@@ -19,16 +19,20 @@ class CommentaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentaire::class);
     }
 
+
     // /**
     //  * @return Commentaire[] Returns an array of Commentaire objects
     //  */
-    public function lasttree()
+    
+    public function findByArticleId($value)
     {
-        return $this->createQueryBuilder('p')
-                    ->orderBy('p.id', 'DESC')
-                    ->setMaxResults(3)
-                    ->getQuery()
-                    ->getResult();
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.article = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**
