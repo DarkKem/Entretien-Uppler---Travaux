@@ -17,10 +17,12 @@
                 <div class="d-flex justify-content-between align-items-center">
                   
                   {% if app.user == article.auteur %}
-                  <form action="article/{{article.id}}">
+                  <form action= {{ path('delete_article', {"id" : article.id} )}}>
                     <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                    </form >
+                    <form action= {{ path('modifier_article', {"id" : article.id} )}}>
                     <button type="submit" class="btn btn-sm btn-outline-info">Modifier</button>
-                  </form >
+                    </form >
                   {% endif %}
                   <small class="text-muted"> Publier le {{ article.createdAt|date('d/m/Y') }}</small>
               </div>
@@ -46,13 +48,12 @@
                 <p class="card-text">{{commentaire.contenu}}</p>
                 <div class="d-flex justify-content-between align-items-center">
 
-                  {% if app.user == commentaire.auteur %}
-                  <form action="article/{{article.id}}">
+                  {% if app.user == commentaire.auteur  %}
+                  <form action={{ path('delete_commentaire', {"id" : commentaire.id} )}}>
                     <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
-                    <button type="submit" class="btn btn-sm btn-outline-info">Modifier</button>
                   </form >
                   {% elseif app.user == article.auteur %}
-                  <form action="article/{{article.id}}">
+                  <form action={{ path('delete_commentaire', {"id" : commentaire.id} )}}>
                     <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
                   </form >
                   {% endif %}
@@ -60,7 +61,6 @@
                   <small class="text-muted"> Publier le {{ commentaire.createdAt|date('d/m/Y') }}</small>
               </div>
   </div>
-
 {% endfor %}
 
 {% endblock %}

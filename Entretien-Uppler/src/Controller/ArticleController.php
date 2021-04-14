@@ -81,14 +81,60 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/modifier_articler/{id}", name="modifier_articler")
+     * @Route("/modifier_article/{id}", name="modifier_article")
      */
-    public function modifierArticle(int $id, ArticleRepository $articleRepository, 
-                            CommentaireRepository $commentaireRepository): Response
+    public function modifierArticle(int $id, Request $request, ArticleRepository $articleRepository): Response
     {
-        return $this->render('article/articleDetaille.html.twig', [
-            'article' => $articleRepository->findById($id)[0] ,
-            'commentaires' => $commentaireRepository->findByArticleId($id),
+        $article = $articleRepository->findById($id)[0];
+
+        $article->setAuteur($this->getUser())
+                ->setCreatedAt(new DateTime())
+                ->setDateModification(new DateTime());
+        
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('article', ["id" => $article->getId()]);
+        }
+
+        return $this->render('article/modif.html.twig', [
+            "form" => $form->createView(),
+            "article" => $article
         ]);
+    }
+
+    /**
+     * @Route("/delete_article/{id}", name="delete_article")
+     */
+    public function deleteArticle(int $id, ArticleRepository $articleRepository): Response
+    {
+        $article = $articleRepository->findById($id)[0];
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->remove($article);
+        $manager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/delete_commentaire/{id}", name="delete_commentaire")
+     */
+    public function deleteCommentaire(int $id, CommentaireRepository $commentaireRepository): Response
+    {
+        $commentaire = $commentaireRepository->findById($id)[0];
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->remove($commentaire);
+        $manager->flush();
+        return $this->redirectToRoute('home');
     }
 }
