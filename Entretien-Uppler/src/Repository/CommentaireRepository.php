@@ -34,7 +34,21 @@ class CommentaireRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
+    
+    // /**
+    //  * @return Article[] Returns an array of Article objects
+    //  */
+    
+    public function findById($value)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id = :val')
+            ->setParameter('val', $value)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     // /**
     //  * @return Commentaire[] Returns an array of Commentaire objects
     //  */
